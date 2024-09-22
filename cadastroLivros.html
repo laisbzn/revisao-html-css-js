@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="cadastroLivros.js"></script>
+    <script src="cadastroLivros.js" defer></script>
     <title>Cadastro de Livros</title>
 </head>
 <body>
@@ -20,9 +20,9 @@
         <div>
             <input placeholder="Titulo" type="text" id="titulo">
             <input placeholder="Descrição" type="text" id="descricao">
-            <button>Cadastrar</button>
+            <button id="btnCadastrar">Cadastrar</button>
         </div>
-        
+        <div id="mensagem"></div> <!-- Div para exibir a mensagem de sucesso ou erro -->
     </main>
     
 </body>

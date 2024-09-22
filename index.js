@@ -1,40 +1,50 @@
-async function iniciaListagem(){
+async function iniciaListagem() {
+    try {
+        const response = await fetch("https://api-aula.up.railway.app/livros");
+        const livros = await response.json(); // Obtendo os dados corretamente com await
 
-    const response = await fetch("https://api-aula.up.railway.app/livros")
-    const livros = response.json()
+        if (livros.length === 0) {
+            document.getElementById("listaLivros").innerHTML = "<p>Nenhum livro cadastrado.</p>";
+            return;
+        }
 
-    const inicioTabela = `
+        // Início da tabela
+        const inicioTabela = `
+        <table border="2">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>TÍTULO</th>
+                    <th>DESCRIÇÃO</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
 
-    <table border = "2">
-        <thead>
+        // Construção das linhas da tabela com os livros
+        let meioTabela = '';
+        livros.forEach(livro => {
+            meioTabela += `
             <tr>
-                <th>ID</th>
-                <th>TITULO</th>
-                <th>DESCRIÇÃO</th>
+                <td>${livro.id}</td>
+                <td>${livro.title}</td>
+                <td>${livro.description}</td>
             </tr>
-        </thead>
-    <tbody>            
-    `
+            `;
+        });
 
-    let meioTabela = ``
-    for (let index = 0; index < livros .length; index++) {
-        meioTabela =+ `
+        // Fim da tabela
+        const fimTabela = `
+            </tbody>
+        </table>
+        `;
 
-        <tr>
-            <td>${livros[index].id}</td>
-            <td>${livros[index].title}</td>
-            <td>${livros[index].description}</td>
-        </tr>
-        `
+        // Montando a tabela completa e inserindo no HTML
+        const tabelaCompleta = inicioTabela + meioTabela + fimTabela;
+        document.getElementById("listaLivros").innerHTML = tabelaCompleta;
+
+    } catch (error) {
+        console.error("Erro ao buscar livros:", error);
+        document.getElementById("listaLivros").innerHTML = "<p>Erro ao carregar a listagem de livros.</p>";
     }
-
-    const fimTabela = `
-        </tbody>
-    </table>
-    `
-
-    const tabelaCompleta = inicioTabela + meioTabela + fimTabela
-
-    document.getElementById("listaLivros").innerHTML = tabelaCompleta
-
 }
